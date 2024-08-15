@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Translation and Report Service</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+
+        header {
+            background-color: #9e0036; /* Primary color */
+            color: #ffdc78; /* Accent color */
+            padding: 10px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: #ffdc78; /* Accent color */
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        main {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .plan-details, .options-details, .demo, .report {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            margin-top: 20px;
+        }
+
+        button {
+            background-color: #9e0036; /* Primary color */
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #8b002d; /* Darker shade of primary color */
+        }
+
+        select, input[type="checkbox"], input[type="radio"] {
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-top: 10px;
+        }
+
+        .translation-section {
+            display: flex;
+            gap: 20px;
+        }
+
+        .form-container {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .form-column {
+            flex: 1;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+        .form-column h3 {
+            margin-top: 0;
+            color: #9e0036; /* Primary color */
+        }
+
+        .form-container label {
+            display: block;
+            margin: 5px 0;
+        }
+
+        .form-container input, .form-container textarea {
+            width: 100%;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .upload-section {
+            margin-top: 20px;
+        }
+
+        .upload-section label {
+            display: block;
+            margin: 10px 0;
+        }
+
+        .upload-section input[type="file"] {
+            margin-top: 5px;
+        }
+
+        .translation-options {
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .translation-options div {
+            margin-top: 10px;
+        }
+
+        .translation-options label {
+            display: block;
+            margin: 5px 0;
+        }
+
+        .translation-options input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .radio-group {
+            margin-top: 20px;
+        }
+
+        .radio-group label {
+            display: block;
+            margin: 5px 0;
+        }
+
+        .options-details {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        .translated, .live-audio, .push-to-talk-options, .report {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            background-color: #fef3e0; /* Light accent color */
+            border-radius: 5px;
+        }
+
+        .form-content, .form-content-ar {
+            flex: 1;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #fff;
+        }
+
+        .form-content label, .form-content-ar label {
+            display: block;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Dynamic Translation and Report Service</h1>
+        <nav>
+            <a href="#" onclick="showPage('index')">Home</a>
+            <a href="#" onclick="showPage('translation')">Translation Service</a>
+            <a href="#" onclick="showPage('report')">Report Service</a>
+            <a href="#" onclick="showPage('combined')">Combined Service</a>
+        </nav>
+    </header>
+    <main id="main-content">
+        <!-- Main content will be inserted here based on the selected service -->
+    </main>
+    <footer>
+        <p>© 2024 Translation Services Inc.</p>
+    </footer>
+    <script>
+        function showPage(service) {
+            const content = document.getElementById('main-content');
+            let html = '';
+
+            if (service === 'index') {
+                html = `
+                    <section class="section intro">
+                        <h2>Welcome to Our Translation and Report Service</h2>
+                        <p>Select a service to explore our offerings.</p>
+                    </section>
+                `;
+            } else if (service === 'translation') {
+                html = `
+                    <section class="section plan-details">
+                        <h2>Translation Service</h2>
+                        <p>This service includes text and/or audio translation.</p>
+                        <button onclick="showOptions('translation')">Try Now</button>
+                    </section>
+                    <section id="options" class="section options-details"></section>
+                `;
+            } else if (service === 'report') {
+                html = `
+                    <section class="section plan-details">
+                        <h2>Report Service</h2>
+                        <p>This service includes report generation with text review and optional audio or conversation text.</p>
+                        <button onclick="showOptions('report')">Try Now</button>
+                    </section>
+                    <section id="options" class="section options-details"></section>
+                `;
+            } else if (service === 'combined') {
+                html = `
+                    <section class="section plan-details">
+                        <h2>Combined Service</h2>
+                        <p>This service includes both translation and report generation.</p>
+                        <button onclick="showOptions('combined')">Try Now</button>
+                    </section>
+                    <section id="options" class="section options-details"></section>
+                `;
+            }
+
+            content.innerHTML = html;
+        }
+
+        function showOptions(service) {
+            const optionsSection = document.getElementById('options');
+            let optionsHTML = `
+                <h3>Choose Options for ${service.charAt(0).toUpperCase() + service.slice(1)} Service</h3>
+            `;
+
+            if (service === 'translation' || service === 'combined') {
+                optionsHTML += `
+                    <div class="translation-options">
+                        <div id="audio-transcription-group">
+                            <label for="audio-translation">Include Audio Transcription:</label>
+                            <input type="checkbox" id="audio-translation" name="audio-translation">
+                            <div id="audio-source" class="hidden">
+                                <label for="audio-source-select">Audio Source:</label>
+                                <select id="audio-source-select" name="audio-source-select">
+                                    <option value="microphone">Microphone</option>
+                                    <option value="system">System Audio</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div id="text-translation-group">
+                            <label for="text-translation">Include Text Translation:</label>
+                            <input type="checkbox" id="text-translation" name="text-translation">
+                            <div id="language-options" class="hidden">
+                                <label for="text-language">Text Language:</label>
+                                <select id="text-language" name="text-language">
+                                    <option value="english">English</option>
+                                    <option value="arabic">Arabic</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="radio-group">
+                        <label>Audio Input Type:</label>
+                        <label><input type="radio" name="audio-input" id="push-to-talk-option" value="push-to-talk"> Push to Talk</label>
+                        <label><input type="radio" name="audio-input" id="live-audio-option" value="live-audio"> Live Audio</label>
+                    </div>
+                `;
+            }
+
+            if (service === 'report' || service === 'combined') {
+                optionsHTML += `
+                    <div class="translation-options">
+                        <label for="report-generation">Generate Report:</label>
+                        <input type="checkbox" id="report-generation" name="report-generation">
+                        <div id="report-options" class="hidden">
+                            <label for="include-audio">Include Audio or Conversation Text:</label>
+                            <input type="checkbox" id="include-audio" name="include-audio">
+                            <div>
+                                <label for="translation-report">Include Translation:</label>
+                                <input type="checkbox" id="translation-report" name="translation-report">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="upload-section" class="upload-section hidden">
+                        <h3>Upload Files</h3>
+                        <label for="pdf-upload">Upload PDF File:</label>
+                        <input type="file" id="pdf-upload" name="pdf-upload" accept=".pdf">
+                        <label for="text-upload">Upload Text File:</label>
+                        <input type="file" id="text-upload" name="text-upload" accept=".txt">
+                    </div>
+                `;
+            }
+
+            optionsHTML += `
+                <button onclick="startDemo('${service}')">Generate Demo</button>
+            `;
+            optionsSection.innerHTML = optionsHTML;
+
+            // Add event listeners
+            document.getElementById('text-translation')?.addEventListener('change', toggleLanguageOptions);
+            document.getElementById('audio-translation')?.addEventListener('change', toggleAudioOptions);
+            document.getElementById('push-to-talk-option')?.addEventListener('change', toggleAudioInputOptions);
+            document.getElementById('live-audio-option')?.addEventListener('change', toggleAudioInputOptions);
+            document.getElementById('report-generation')?.addEventListener('change', toggleReportOptions);
+            document.getElementById('translation-report')?.addEventListener('change', toggleReportTranslation);
+            document.getElementById('report-generation')?.addEventListener('change', toggleUploadSection);
+        }
+
+        function toggleLanguageOptions() {
+            const textTranslationChecked = document.getElementById('text-translation')?.checked;
+            const languageOptions = document.getElementById('language-options');
+            languageOptions.classList.toggle('hidden', !textTranslationChecked);
+        }
+
+        function toggleAudioOptions() {
+            const audioTranslationChecked = document.getElementById('audio-translation')?.checked;
+            const audioSource = document.getElementById('audio-source');
+            audioSource.classList.toggle('hidden', !audioTranslationChecked);
+        }
+
+        function toggleAudioInputOptions() {
+            const isPushToTalk = document.getElementById('push-to-talk-option')?.checked;
+            const isLiveAudio = document.getElementById('live-audio-option')?.checked;
+            document.getElementById('push-to-talk-options')?.classList.toggle('hidden', !isPushToTalk);
+            document.getElementById('live-audio-options')?.classList.toggle('hidden', !isLiveAudio);
+        }
+
+        function toggleReportOptions() {
+            const reportChecked = document.getElementById('report-generation')?.checked;
+            const reportOptions = document.getElementById('report-options');
+            reportOptions.classList.toggle('hidden', !reportChecked);
+        }
+
+        function toggleReportTranslation() {
+            const translationChecked = document.getElementById('translation-report')?.checked;
+            const formContainer = document.getElementById('form-container');
+            formContainer.classList.toggle('hidden', !translationChecked);
+        }
+
+        function toggleUploadSection() {
+            const reportChecked = document.getElementById('report-generation')?.checked;
+            const uploadSection = document.getElementById('upload-section');
+            uploadSection.classList.toggle('hidden', !reportChecked);
+        }
+
+        function startDemo(service) {
+            const optionsSection = document.getElementById('options');
+            const formType = document.getElementById('form-type')?.value;
+            const audioTranslationChecked = document.getElementById('audio-translation')?.checked;
+            const textTranslationChecked = document.getElementById('text-translation')?.checked;
+            const reportGenerationChecked = document.getElementById('report-generation')?.checked;
+            const includeAudioChecked = document.getElementById('include-audio')?.checked;
+            const textLanguage = document.getElementById('text-language')?.value;
+            const isPushToTalk = document.getElementById('push-to-talk-option')?.checked;
+            const isLiveAudio = document.getElementById('live-audio-option')?.checked;
+            const translationReportChecked = document.getElementById('translation-report')?.checked;
+
+            let demoHTML = `
+                <h3>Demo for ${service.charAt(0).toUpperCase() + service.slice(1)} Service</h3>
+                ${formType ? `<p>Form Type: ${formType}</p>` : ''}
+                <p>Options Selected:</p>
+                <ul>
+                    ${audioTranslationChecked ? '<li>Include Audio Transcription</li>' : ''}
+                    ${textTranslationChecked ? `<li>Include Text Translation (${textLanguage})</li>` : ''}
+                    ${reportGenerationChecked ? '<li>Generate Report</li>' : ''}
+                    ${includeAudioChecked ? '<li>Include Audio or Conversation Text</li>' : ''}
+                    ${isPushToTalk ? '<li>Push to Talk Enabled</li>' : ''}
+                    ${isLiveAudio ? '<li>Live Audio Enabled</li>' : ''}
+                </ul>
+                ${audioTranslationChecked ? `
+                <div id="audio-text">
+                    <h4>Generated Text:</h4>
+                    <textarea id="generated-text" placeholder="Your text will appear here..."></textarea>
+                </div>
+                ` : ''}
+                ${isPushToTalk ? `
+                <div id="push-to-talk-demo" class="push-to-talk-options">
+                    <h4>Push to Talk Demo:</h4>
+                    <button onclick="togglePushToTalk()">Push to Talk</button>
+                </div>
+                ` : ''}
+                ${isLiveAudio ? `
+                <div id="live-audio-demo" class="live-audio">
+                    <h4>Live Audio Demo:</h4>
+                    <button onclick="startLiveAudio()">Start Live Audio</button>
+                    <button onclick="stopLiveAudio()">Stop Live Audio</button>
+                </div>
+                ` : ''}
+                ${textTranslationChecked ? `
+                <div id="translated-text" class="translated">
+                    <h4>Translated Text (${textLanguage}):</h4>
+                    <p id="translated-text-content">Sample translated text will appear here.</p>
+                </div>
+                ` : ''}
+                ${reportGenerationChecked ? `
+                <div id="report" class="report">
+                    <button onclick="generateReport()">Generate Report</button>
+                    <div id="report-content"></div>
+                    ${includeAudioChecked ? `
+                    <div id="sample-audio" class="live-audio">
+                        <p>Sample audio or conversation text content will be displayed here.</p>
+                    </div>
+                    ` : ''}
+                </div>
+                ` : ''}
+                ${reportGenerationChecked && translationReportChecked ? `
+                <div id="form-container" class="form-container">
+                    <div class="form-column form-content">
+                        <h3>Example Form (English)</h3>
+                        <form>
+                            <label for="patient-name-en">Patient Name:</label>
+                            <input type="text" id="patient-name-en" name="patient-name" value="Ahmad Ali">
+                            <label for="patient-age-en">Age:</label>
+                            <input type="number" id="patient-age-en" name="patient-age" value="45">
+                            <label for="diagnosis-en">Diagnosis:</label>
+                            <input type="text" id="diagnosis-en" name="diagnosis" value="Flu">
+                            <label for="notes-en">Notes:</label>
+                            <textarea id="notes-en" name="notes">Patient is recovering well.</textarea>
+                        </form>
+                    </div>
+                    <div class="form-column form-content-ar">
+                        <h3>نموذج مثال (عربي)</h3>
+                        <form>
+                            <label for="patient-name-ar">اسم المريض:</label>
+                            <input type="text" id="patient-name-ar" name="patient-name" value="أحمد علي">
+                            <label for="patient-age-ar">العمر:</label>
+                            <input type="number" id="patient-age-ar" name="patient-age" value="45">
+                            <label for="diagnosis-ar">التشخيص:</label>
+                            <input type="text" id="diagnosis-ar" name="diagnosis" value="أنفلونزا">
+                            <label for="notes-ar">ملاحظات:</label>
+                            <textarea id="notes-ar" name="notes">المريض في حالة تحسن.</textarea>
+                        </form>
+                    </div>
+                </div>
+                ` : ''}
+            `;
+
+            optionsSection.innerHTML = demoHTML;
+        }
+
+        function togglePushToTalk() {
+            // Dummy function to simulate Push to Talk
+            console.log('Push to Talk toggled');
+        }
+
+        function startLiveAudio() {
+            // Dummy function to simulate starting live audio
+            console.log('Live audio started');
+        }
+
+        function stopLiveAudio() {
+            // Dummy function to simulate stopping live audio
+            console.log('Live audio stopped');
+        }
+
+        function generateReport() {
+            // Dummy function to simulate report generation
+            console.log('Report generated');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            showPage('index'); // Show default page
+        });
+    </script>
+</body>
+</html>
